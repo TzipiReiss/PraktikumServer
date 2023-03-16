@@ -9,7 +9,7 @@ namespace _2_Services.Interfaces
 
         Task<T> GetById(int id);
 
-        Task Add(T item);
+        Task<T> Add(T item);
 
         Task Update(T item);
 
