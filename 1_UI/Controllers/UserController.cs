@@ -28,13 +28,13 @@ namespace _1_UI.Controllers
         }
 
         [HttpPost]
-        public async Task post([FromBody] UserModel user)
+        public async Task<UserModel> post([FromBody] UserModel user)
         {
             if (!ModelState.IsValid)
             {
                 BadRequest();
             }
-           await _service.Add(user);
+            return await _service.Add(user);
         }
 
         [HttpPut("{id}")]
