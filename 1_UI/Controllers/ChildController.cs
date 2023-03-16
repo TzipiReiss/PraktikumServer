@@ -30,15 +30,16 @@ namespace _1_UI.Controllers
         }
 
         [HttpPost]
-        public async Task post([FromBody] ChildModel child)
+        public async Task<ChildModel> post([FromBody] ChildModel child)
         {
             if (!ModelState.IsValid)
             {
                 BadRequest();
             }
-            await _service.Add(child);
-            UserModel c = _userService.GetById((int)child.UserId).Result;
-            c.Children.Add(child);
+            var c = await _service.Add(child);
+            UserModel u = _userService.GetById((int)child.UserId).Result;
+            u.Children.Add(child);
+            return c;
         }
 
         [HttpPut("{id}")]
