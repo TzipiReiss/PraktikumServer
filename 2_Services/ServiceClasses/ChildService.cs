@@ -21,9 +21,16 @@ namespace _2_Services.ServiceClasses
             this.mapper = mapper;
         }
 
-        public async Task Add(ChildModel child)
+         public async Task<ChildModel> Add(ChildModel child)
         {
-             mapper.Map<ChildModel>(rep.Add(mapper.Map<Child>(child)));
+            return mapper.Map<ChildModel>(await rep.Add(mapper.Map<Child>(
+                new ChildModel
+                {
+                    DateOfBirth = child.DateOfBirth,
+                    FirstName = child.FirstName,
+                    IDNumber = child.IDNumber,
+                    UserId = child.UserId
+                })));
         }
 
         public async Task Delete(int id)
