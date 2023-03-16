@@ -11,15 +11,10 @@ namespace _2_Services.Models
 {
     public class ChildModel
     {
-        [Key]
         public int ChildId { get; set; }
-        [Required]  
         public string FirstName { get; set; }
-        [Required]
         public DateTime DateOfBirth { get; set; }
-        [Required]
         public string IDNumber { get; set; }
-        [ForeignKey("UserId")]
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
     }
 }
