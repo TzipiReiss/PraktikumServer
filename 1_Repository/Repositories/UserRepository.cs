@@ -1,6 +1,7 @@
 ﻿using _3_Repository.Entities;
 using _3_Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace _3_Repository.Repositories
@@ -13,16 +14,17 @@ namespace _3_Repository.Repositories
             data = _data;
         }
 
-        public async Task Add(User user)
+        public async Task<User> Add(User user)
         {
-            var u = data.Users.AddAsync(user);
+            EntityEntry<User> u = await data.Users.AddAsync(user);
             await data.SaveChangesAsync();
             foreach (var item in user.Children)
             {
-                item.UserId=user.UserId;
+                item.UserId = u.Entity.UserId;
                 data.Children.Add(item);
-                await data.SaveChangesAsync();
+                 data.SaveChangesAsync();
             }
+            return u.Entity;
         }
 
         public async Task Delete(int id)
