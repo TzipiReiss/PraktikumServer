@@ -15,7 +15,8 @@ namespace _3_Repository.Entities
         [MaxLength(9)]
         [MinLength(9)]
         public string IDNumber { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey("User")]
         public int? UserId { get; set; }
+        public User User { get; set; } = null!;
     }
 }
