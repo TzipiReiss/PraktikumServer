@@ -1,6 +1,7 @@
 ﻿using _3_Repository.Entities;
 using _3_Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,11 @@ namespace _3_Repository.Repositories
             data = _data;
         }
 
-        public async Task Add(Child Child)
+         public async Task<Child> Add(Child child)
         {
-            data.Children.Add(Child);
+            EntityEntry<Child> newChild = await data.Children.AddAsync(child);
             await data.SaveChangesAsync();
-            var x = data.Users.FirstOrDefaultAsync(x => x.UserId == Child.UserId).Result;
-            x.Children.Add(Child);
+            return newChild.Entity;
         }
 
         public async Task Delete(int id)
