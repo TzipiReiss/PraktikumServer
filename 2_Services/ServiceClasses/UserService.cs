@@ -17,9 +17,19 @@ namespace _2_Services.ServiceClasses
             this.mapper = mapper;
         }
 
-        public async Task Add(UserModel user)
+        public async Task<UserModel> Add(UserModel user)
         {
-             mapper.Map<UserModel>( rep.Add(mapper.Map<User>(user)));
+            return mapper.Map<UserModel>(await rep.Add(mapper.Map<User>(
+                new UserModel()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    DateOfBirth = user.DateOfBirth,
+                    Gender = user.Gender,
+                    HMO = user.HMO,
+                    IDNumber = user.IDNumber,
+                    Children = user.Children,
+                })));
         }
 
         public async Task Delete(int id)
