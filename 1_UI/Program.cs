@@ -15,25 +15,19 @@ namespace _1_UI
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddCors(option => option.AddPolicy("corsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             builder.Services.AddControllers();
 
-            // builder.Services.AddAutoMapper(typeof(Mapping));
             builder.Services.AddRepoDependencies();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IChildService, ChildService>();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Add services to the container.
-
-            // Configure the HTTP request pipeline.
             app.UseCors("corsPolicy");
 
             if (app.Environment.IsDevelopment())
