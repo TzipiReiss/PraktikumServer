@@ -23,19 +23,12 @@ namespace _2_Services.ServiceClasses
 
          public async Task<ChildModel> Add(ChildModel child)
         {
-            return mapper.Map<ChildModel>(await rep.Add(mapper.Map<Child>(
-                new ChildModel
-                {
-                    DateOfBirth = child.DateOfBirth,
-                    FirstName = child.FirstName,
-                    IDNumber = child.IDNumber,
-                    UserId = child.UserId
-                })));
+            return mapper.Map<ChildModel>(await rep.Add(mapper.Map<Child>(child)));
         }
 
         public async Task Delete(int id)
         {
-            rep.Delete(id);
+            await rep.Delete(id);
         }
 
         public async Task<IEnumerable<ChildModel>> GetAll()
@@ -45,12 +38,12 @@ namespace _2_Services.ServiceClasses
 
         public async Task<ChildModel> GetById(int id)
         {
-            return await mapper.Map<Task<ChildModel>>(rep.GetById(id));
+            return mapper.Map<ChildModel>(await rep.GetById(id));
         }
 
         public async Task Update(ChildModel child)
         {
-            rep.Update(mapper.Map<Child>(child));
+            await rep.Update(mapper.Map<Child>(child));
         }
     }
 }
