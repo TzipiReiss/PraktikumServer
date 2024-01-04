@@ -21,15 +21,19 @@ namespace _3_Repository.Repositories
 
          public async Task<Child> Add(Child child)
         {
-            EntityEntry<Child> newChild = await data.Children.AddAsync(child);
+            _ = data.Children.AddAsync(child);
             await data.SaveChangesAsync();
-            return newChild.Entity;
+            return child;
         }
 
         public async Task Delete(int id)
         {
-            data.Children.Remove(await GetById(id));
-            await data.SaveChangesAsync();
+            Child child = data.Children.Remove(await GetById(id)).Entity;
+            if (child != null)
+            {
+                data.Children.Remove(child);
+                await data.SaveChangesAsync();
+            }
         }
 
         public async Task<List<Child>> GetAll()
@@ -42,9 +46,9 @@ namespace _3_Repository.Repositories
             return await data.Children.FindAsync(id);
         }
 
-        public async Task Update(Child Child)
+        public async Task Update(Child child)
         {
-            data.Children.Update(Child);
+            data.Children.Update(child);
             await data.SaveChangesAsync();
         }
     }
